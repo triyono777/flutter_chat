@@ -20,12 +20,30 @@ class _AuthFormState extends State<AuthForm> {
             children: <Widget>[
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
+                validator: (val) {
+                  if (val.isEmpty || !val.contains('@')) {
+                    return 'Silahkan masukkan email yang valid';
+                  }
+                  return null;
+                },
                 decoration: InputDecoration(labelText: 'Email Address'),
               ),
               TextFormField(
+                validator: (val) {
+                  if (val.isEmpty || val.length < 4) {
+                    return 'Username tidak boleh kurang dari 4';
+                  }
+                  return null;
+                },
                 decoration: InputDecoration(labelText: 'Username'),
               ),
               TextFormField(
+                validator: (val) {
+                  if (val.isEmpty || val.length < 7) {
+                    return 'Password tidak boleh kurang dari 7';
+                  }
+                  return null;
+                },
                 decoration: InputDecoration(labelText: 'Password'),
                 obscureText: true,
               ),
