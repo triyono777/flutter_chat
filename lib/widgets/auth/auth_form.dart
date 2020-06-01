@@ -6,6 +6,22 @@ class AuthForm extends StatefulWidget {
 }
 
 class _AuthFormState extends State<AuthForm> {
+  final _formKey = GlobalKey<FormState>();
+  String _userEmail = '';
+  String _userPassword = '';
+  String _userUsername = '';
+  void _trySubmit() {
+    final isValid = _formKey.currentState.validate();
+    FocusScope.of(context).unfocus();
+    if (isValid) {
+      _formKey.currentState.save();
+      //use those value to send our auth request
+      print(_userEmail);
+      print(_userPassword);
+      print(_userUsername);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -15,6 +31,7 @@ class _AuthFormState extends State<AuthForm> {
           child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
+          key: _formKey,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -26,6 +43,9 @@ class _AuthFormState extends State<AuthForm> {
                   }
                   return null;
                 },
+                onSaved: (value) {
+                  _userEmail = value;
+                },
                 decoration: InputDecoration(labelText: 'Email Address'),
               ),
               TextFormField(
@@ -36,6 +56,9 @@ class _AuthFormState extends State<AuthForm> {
                   return null;
                 },
                 decoration: InputDecoration(labelText: 'Username'),
+                onSaved: (value) {
+                  _userUsername = value;
+                },
               ),
               TextFormField(
                 validator: (val) {
@@ -46,12 +69,15 @@ class _AuthFormState extends State<AuthForm> {
                 },
                 decoration: InputDecoration(labelText: 'Password'),
                 obscureText: true,
+                onSaved: (value) {
+                  _userPassword = value;
+                },
               ),
               SizedBox(
                 height: 12,
               ),
               RaisedButton(
-                onPressed: () {},
+                onPressed: _trySubmit,
                 child: Text('Login'),
               ),
               FlatButton(
