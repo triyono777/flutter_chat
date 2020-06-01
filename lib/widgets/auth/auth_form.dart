@@ -22,9 +22,9 @@ class _AuthFormState extends State<AuthForm> {
       _formKey.currentState.save();
       //use those value to send our auth request
       widget.submitFn(
-        _userEmail,
-        _userPassword,
-        _userUsername,
+        _userEmail.trim(),
+        _userPassword.trim(),
+        _userUsername.trim(),
         _isLogin,
         context,
       );
