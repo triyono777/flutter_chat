@@ -7,9 +7,10 @@ class AuthForm extends StatefulWidget {
 
 class _AuthFormState extends State<AuthForm> {
   final _formKey = GlobalKey<FormState>();
-  String _userEmail = '';
-  String _userPassword = '';
-  String _userUsername = '';
+  var _isLogin = true;
+  var _userEmail = '';
+  var _userPassword = '';
+  var _userUsername = '';
   void _trySubmit() {
     final isValid = _formKey.currentState.validate();
     FocusScope.of(context).unfocus();
@@ -78,12 +79,17 @@ class _AuthFormState extends State<AuthForm> {
               ),
               RaisedButton(
                 onPressed: _trySubmit,
-                child: Text('Login'),
+                child: Text(_isLogin ? 'Login' : 'Signup'),
               ),
               FlatButton(
                 textColor: Theme.of(context).primaryColor,
-                onPressed: () {},
-                child: Text('Create new account'),
+                onPressed: () {
+                  setState(() {
+                    _isLogin = !_isLogin;
+                  });
+                },
+                child: Text(
+                    _isLogin ? 'Create new account' : 'Saya Sudah punya akun'),
               ),
             ],
           ),
