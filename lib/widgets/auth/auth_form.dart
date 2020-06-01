@@ -37,6 +37,7 @@ class _AuthFormState extends State<AuthForm> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               TextFormField(
+                key: ValueKey('email'),
                 keyboardType: TextInputType.emailAddress,
                 validator: (val) {
                   if (val.isEmpty || !val.contains('@')) {
@@ -49,19 +50,22 @@ class _AuthFormState extends State<AuthForm> {
                 },
                 decoration: InputDecoration(labelText: 'Email Address'),
               ),
+              if (!_isLogin)
+                TextFormField(
+                  key: ValueKey('username'),
+                  validator: (val) {
+                    if (val.isEmpty || val.length < 4) {
+                      return 'Username tidak boleh kurang dari 4';
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(labelText: 'Username'),
+                  onSaved: (value) {
+                    _userUsername = value;
+                  },
+                ),
               TextFormField(
-                validator: (val) {
-                  if (val.isEmpty || val.length < 4) {
-                    return 'Username tidak boleh kurang dari 4';
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(labelText: 'Username'),
-                onSaved: (value) {
-                  _userUsername = value;
-                },
-              ),
-              TextFormField(
+                key: ValueKey('password'),
                 validator: (val) {
                   if (val.isEmpty || val.length < 7) {
                     return 'Password tidak boleh kurang dari 7';
