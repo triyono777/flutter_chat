@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_chat/widgets/auth/auth_form.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -17,12 +18,25 @@ class _AuthScreenState extends State<AuthScreen> {
     bool isLogin,
   ) async {
     AuthResult authResult;
-    if (isLogin) {
-      authResult = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-    } else {
-      authResult = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+
+    try {
+      if (isLogin) {
+        authResult = await _auth.signInWithEmailAndPassword(
+            email: email, password: password);
+      } else {
+        authResult = await _auth.createUserWithEmailAndPassword(
+            email: email, password: password);
+      }
+    } on PlatformException catch (error) {
+      var message = 'ada error, cek email password';
+
+      if (error.message != null) {
+        message = error.message;
+      }
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text(message),
+        backgroundColor: Theme.of(context).errorColor,
+      ));
     }
   }
 
