@@ -16,6 +16,7 @@ class _AuthScreenState extends State<AuthScreen> {
     String password,
     String username,
     bool isLogin,
+    BuildContext ctx,
   ) async {
     AuthResult authResult;
 
@@ -33,10 +34,12 @@ class _AuthScreenState extends State<AuthScreen> {
       if (error.message != null) {
         message = error.message;
       }
-      Scaffold.of(context).showSnackBar(SnackBar(
+      Scaffold.of(ctx).showSnackBar(SnackBar(
         content: Text(message),
-        backgroundColor: Theme.of(context).errorColor,
+        backgroundColor: Theme.of(ctx).errorColor,
       ));
+    } catch (err) {
+      print(err);
     }
   }
 
