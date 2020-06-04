@@ -8,7 +8,7 @@ class Messages extends StatelessWidget {
     return StreamBuilder(
       stream: Firestore.instance
           .collection('chat')
-          .orderBy('createdAt')
+          .orderBy('createdAt', descending: true)
           .snapshots(),
       builder: (ctx, chatSnapshot) {
         if (chatSnapshot.connectionState == ConnectionState.waiting) {
