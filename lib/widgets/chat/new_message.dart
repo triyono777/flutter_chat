@@ -7,6 +7,10 @@ class NewMessage extends StatefulWidget {
 
 class _NewMessageState extends State<NewMessage> {
   var _enteredMessage = '';
+  void _sendMessage() {
+    FocusScope.of(context).unfocus();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,7 +30,11 @@ class _NewMessageState extends State<NewMessage> {
           IconButton(
             color: Theme.of(context).primaryColor,
             icon: Icon(Icons.send),
-            onPressed: _enteredMessage.trim().isEmpty ? null : () {},
+            onPressed: _enteredMessage.trim().isEmpty
+                ? null
+                : () {
+                    _sendMessage();
+                  },
           )
         ],
       ),
