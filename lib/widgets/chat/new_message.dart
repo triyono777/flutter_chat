@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class NewMessage extends StatefulWidget {
   @override
@@ -9,6 +10,9 @@ class _NewMessageState extends State<NewMessage> {
   var _enteredMessage = '';
   void _sendMessage() {
     FocusScope.of(context).unfocus();
+    Firestore.instance.collection('chat').add({
+      'text': _enteredMessage,
+    });
   }
 
   @override
