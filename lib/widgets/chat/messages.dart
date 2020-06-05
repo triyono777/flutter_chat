@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,13 +17,21 @@ class Messages extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         }
         final chatDocs = chatSnapshot.data.documents;
-        return ListView.builder(
-          reverse: true,
-          itemBuilder: (ctx, index) => MessagesBuble(
-            message: chatDocs[index]['text'],
-          ),
-          itemCount: chatDocs.length,
-        );
+        return FutureBuilder(
+            future: FirebaseAuth.instance.currentUser(),
+            builder: (ctx, futureSnapshot) {
+              if (futureSnapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              }
+              return ListView.builder(
+                reverse: true,
+                itemBuilder: (ctx, index) => MessagesBuble(
+                  message: chatDocs[index]['text'],
+                  isMe: chatDocs[index]['userId'],
+                ),
+                itemCount: chatDocs.length,
+              );
+            });
       },
     );
   }
