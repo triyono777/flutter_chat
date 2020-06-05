@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 class MessagesBuble extends StatelessWidget {
   final String message;
   final bool isMe;
+  final Key key;
 
-  const MessagesBuble({Key key, this.message, this.isMe}) : super(key: key);
+  const MessagesBuble({this.message, this.isMe, this.key});
   @override
   Widget build(BuildContext context) {
     return Row(
