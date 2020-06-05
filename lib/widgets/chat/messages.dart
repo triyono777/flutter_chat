@@ -7,27 +7,27 @@ import 'package:flutter_chat/widgets/chat/message_buble.dart';
 class Messages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: Firestore.instance
-          .collection('chat')
-          .orderBy('createdAt', descending: true)
-          .snapshots(),
-      builder: (ctx, chatSnapshot) {
-        if (chatSnapshot.connectionState == ConnectionState.waiting) {
+    return FutureBuilder(
+      future: FirebaseAuth.instance.currentUser(),
+      builder: (ctx, futureSnapshot) {
+        if (futureSnapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
         }
-        final chatDocs = chatSnapshot.data.documents;
-        return FutureBuilder(
-            future: FirebaseAuth.instance.currentUser(),
-            builder: (ctx, futureSnapshot) {
-              if (futureSnapshot.connectionState == ConnectionState.waiting) {
+        return StreamBuilder(
+            stream: Firestore.instance
+                .collection('chat')
+                .orderBy('createdAt', descending: true)
+                .snapshots(),
+            builder: (ctx, chatSnapshot) {
+              if (chatSnapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
               }
+              final chatDocs = chatSnapshot.data.documents;
               return ListView.builder(
                 reverse: true,
                 itemBuilder: (ctx, index) => MessagesBuble(
                   message: chatDocs[index]['text'],
-                  isMe: chatDocs[index]['userId'],
+                  isMe: chatDocs[index]['userId'] == futureSnapshot.data.uid,
                 ),
                 itemCount: chatDocs.length,
               );
