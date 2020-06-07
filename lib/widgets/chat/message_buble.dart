@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -5,8 +6,9 @@ class MessagesBuble extends StatelessWidget {
   final String message;
   final bool isMe;
   final Key key;
+  final String userId;
 
-  const MessagesBuble({this.message, this.isMe, this.key});
+  const MessagesBuble({this.message, this.isMe, this.key, this.userId});
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -25,12 +27,30 @@ class MessagesBuble extends StatelessWidget {
           width: 140,
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
           margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-          child: Text(
-            message,
-            style: TextStyle(
-                color: isMe
-                    ? Colors.black
-                    : Theme.of(context).accentTextTheme.headline1.color),
+          child: Column(
+            children: <Widget>[
+              FutureBuilder(
+                  future: Firestore.instance
+                      .collection('users')
+                      .document(userId)
+                      .get(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Text('loading..');
+                    }
+                    return Text(
+                      snapshot.data['username'],
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    );
+                  }),
+              Text(
+                message,
+                style: TextStyle(
+                    color: isMe
+                        ? Colors.black
+                        : Theme.of(context).accentTextTheme.headline1.color),
+              ),
+            ],
           ),
         ),
       ],
