@@ -6,9 +6,9 @@ class MessagesBuble extends StatelessWidget {
   final String message;
   final bool isMe;
   final Key key;
-  final String userId;
+  final String userName;
 
-  const MessagesBuble({this.message, this.isMe, this.key, this.userId});
+  const MessagesBuble({this.message, this.isMe, this.key, this.userName});
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -31,27 +31,14 @@ class MessagesBuble extends StatelessWidget {
             crossAxisAlignment:
                 isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
             children: <Widget>[
-              FutureBuilder(
-                  future: Firestore.instance
-                      .collection('users')
-                      .document(userId)
-                      .get(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Text('loading..');
-                    }
-                    return Text(
-                      snapshot.data['username'],
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: isMe
-                              ? Colors.black
-                              : Theme.of(context)
-                                  .accentTextTheme
-                                  .headline1
-                                  .color),
-                    );
-                  }),
+              Text(
+                userName,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: isMe
+                        ? Colors.black
+                        : Theme.of(context).accentTextTheme.headline1.color),
+              ),
               Text(
                 message,
                 style: TextStyle(
