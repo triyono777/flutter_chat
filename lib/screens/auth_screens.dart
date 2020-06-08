@@ -36,10 +36,12 @@ class _AuthScreenState extends State<AuthScreen> {
       } else {
         authResult = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
-        FirebaseStorage.instance
+        final ref = FirebaseStorage.instance
             .ref()
             .child('user_image')
             .child(authResult.user.uid + '.jpg');
+        await ref.putFile(image).onComplete;
+
         await Firestore.instance
             .collection('users')
             .document(authResult.user.uid)
