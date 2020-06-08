@@ -4,8 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat/widgets/pickers/user_image_picker.dart';
 
 class AuthForm extends StatefulWidget {
-  final void Function(String email, String password, String username,
-      bool isLogin, BuildContext ctx) submitFn;
+  final void Function(
+    String email,
+    String password,
+    String username,
+    bool isLogin,
+    File image,
+    BuildContext ctx,
+  ) submitFn;
   final bool isLoading;
   const AuthForm(this.submitFn, this.isLoading);
   @override
@@ -45,6 +51,7 @@ class _AuthFormState extends State<AuthForm> {
         _userPassword.trim(),
         _userUsername.trim(),
         _isLogin,
+        _userImageFile,
         context,
       );
     }
