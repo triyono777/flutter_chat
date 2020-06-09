@@ -7,8 +7,10 @@ class MessagesBuble extends StatelessWidget {
   final bool isMe;
   final Key key;
   final String userName;
+  final String userImage;
 
-  const MessagesBuble({this.message, this.isMe, this.key, this.userName});
+  const MessagesBuble(
+      {this.message, this.isMe, this.key, this.userName, this.userImage});
   @override
   Widget build(BuildContext context) {
     return Row(
