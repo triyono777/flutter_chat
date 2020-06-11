@@ -38,7 +38,7 @@ class _UserImagePickerState extends State<UserImagePicker> {
           textColor: Theme.of(context).primaryColor,
           onPressed: _pickerImage,
           icon: Icon(Icons.image),
-          label: Text('Add Image'),
+          label: Text('Add Image / foto'),
         ),
       ],
     );
