@@ -76,6 +76,9 @@ class _AuthFormState extends State<AuthForm> {
                 ),
               TextFormField(
                 key: ValueKey('email'),
+                autocorrect: false,
+                textCapitalization: TextCapitalization.none,
+                enableSuggestions: false,
                 keyboardType: TextInputType.emailAddress,
                 validator: (val) {
                   if (val.isEmpty || !val.contains('@')) {
@@ -91,6 +94,9 @@ class _AuthFormState extends State<AuthForm> {
               if (!_isLogin)
                 TextFormField(
                   key: ValueKey('username'),
+                  autocorrect: true,
+                  textCapitalization: TextCapitalization.words,
+                  enableSuggestions: false,
                   validator: (val) {
                     if (val.isEmpty || val.length < 4) {
                       return 'Username tidak boleh kurang dari 4';
