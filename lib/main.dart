@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Chat',
+      title: 'Flutter Chat test',
       theme: ThemeData(
           primarySwatch: Colors.pink,
           backgroundColor: Colors.pink,
@@ -22,8 +22,7 @@ class MyApp extends StatelessWidget {
           buttonTheme: ButtonTheme.of(context).copyWith(
             buttonColor: Colors.pink,
             textTheme: ButtonTextTheme.primary,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           )),
       home: StreamBuilder(
           stream: FirebaseAuth.instance.onAuthStateChanged,
